@@ -16,10 +16,15 @@
             <input type="password" name="senha" id="senha" class="form-control">
             <br>
             <input type="submit" value="Entrar" class="btn btn-success">
-                    
-
         </form>
-          
+        
+        
+        <?php
+        
+        if(isset($_GET["erro"]))
+            echo $_GET["erro"];
+        
+        ?>
     </div>
 </body>
 </html>

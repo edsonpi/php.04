@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 
 $login = $_POST["login"];
 $senha = md5($_POST["senha"]);
@@ -7,21 +8,25 @@ $senha = md5($_POST["senha"]);
 include_once 'conexao.php';
 
 $sql = "
+SELECT * FROM usuarios WHERE login ='".$login."' AND senha = '".$senha."'";
 
-SELECT * FROM usuarios WHERE login='".$login."' AND 
-senha='".$senha."'
-
-";
-
-$result = mysqli_query($con,$sql);
-
+$result = mysqli_query($con, $sql);
 
 if(mysqli_num_rows($result) == 1){
-    echo "Logado!";
+      
+    //echo "logado!";
+    
+    $row = mysqli_fetch_array($result);
+    $_SESSION["login"] = $row["login"];
+    $_SESSION["perfil"] = $row["perfil"];  
+    header("location:painel.php");
+            
+    } else {
 
-        
-}else{
-    echo "ERRO!";
+$msg = "login/senha inválidos";
+header("location:index.php?erro=".$msg);
+    
+//echo "erro!";
 }
 
 ?>
